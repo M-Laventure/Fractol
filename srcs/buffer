@@ -1,0 +1,2 @@
+#define USAGE "You can select the window's size, or not.. Usage : ./fractol [width] [height] [id_fractal]"
+
