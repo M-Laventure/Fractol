@@ -1,47 +1,30 @@
 #include "../includes/fractol.h"
 #include <stdio.h>
 
-
-void	mandel_color(t_env	*mandel)
+void	mandelbrot_calc(t_fractol *data)
 {
-//	double tmp;
-
-	mandel->c_r = mandel->x / mandel->zoom + mandel->x1;
-	mandel->c_i = mandel->y / mandel->zoom + mandel->y1;
-	mandel->z_r = 0;
-	mandel->z_i = 0;
-	mandel->iter = 0;
-	while ((mandel->z_r * mandel->z_r) + (mandel->z_i * mandel->z_i) < 4  && mandel->iter < mandel->it_max)
+	data->c_r = data->x / data->zoom + data->x1;
+	data->c_i = data->y / data->zoom + data->y1;
+	data->z_r = 0;
+	data->z_i = 0;
+	data->it = 0;
+	while (data->z_r * data->z_r + data->z_i *
+			data->z_i < 4 && data->it < data->it_max)
 	{
-		mandel->tmp = mandel->z_r;
-		mandel->z_r = mandel->z_r * mandel->z_r - mandel->z_i * mandel->z_i + mandel->c_r;
-		mandel->z_i = 2 * mandel->z_i * mandel->tmp + mandel->c_i;
-		mandel->iter++;
+		data->tmp = data->z_r;
+		data->z_r = data->z_r * data->z_r -
+			data->z_i * data->z_i + data->c_r;
+		data->z_i = 2 * data->z_i * data->tmp + data->c_i;
+		data->it++;
 	}
-	if (mandel->iter == mandel->it_max)
-	{
-	//	printf("x: %d\n", mandel->x);
-	//	printf("y: %d\n", mandel->y);
-		fill_pxl(mandel, mandel->x, mandel->y, 0x000000);
-	}
+	if (data->it == data->it_max)
+		put_pxl_to_img(data, data->x, data->y, 0x000000);
 	else
-	{
-	//	printf("x: %d\n", mandel->x);
-	//	printf("y: %d\n", mandel->y);
-		fill_pxl(mandel, mandel->x, mandel->y, 0);
-	}
+		put_pxl_to_img(data, data->x, data->y, (data->color * data->it));
 }
 
 
-/*
-   typedef struct	s_tdata
-   {
-   int		x;
-   t_env	*env;
-   }				t_tdata;
-   */
-
-void	*mandel(void *arg)
+void	*mandelbrot(void *arg)
 {
 	t_env		*mandel;
 	int			tmp;
@@ -54,7 +37,7 @@ void	*mandel(void *arg)
 		mandel->y = tmp;
 		while (mandel->y < mandel->y_max)
 		{
-			mandel_color(mandel);
+			mandel_calc(mandel);
 			mandel->y++;
 		}
 		mandel->x++;
@@ -87,7 +70,6 @@ void	make_mandelbrot(t_env *fractol)
 {
 	init_mandel(fractol);
 	mandel_thread(fractol);
-
 	mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img_ptr, 0, 0);	
 //	ft_putendl("here");
 }

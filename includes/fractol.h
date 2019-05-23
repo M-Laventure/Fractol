@@ -23,11 +23,12 @@ typedef struct s_env
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*img_ptr;
+	void	*img;
 	int 	*img_data;
 	int		bpp;
 	int		size_line;
 	int		endian;
+	int 	fract; //?
 	int		width;
 	int		height;
 	int		x;
@@ -47,18 +48,13 @@ typedef struct s_env
 	e_fractale 	id_fractale;
 }				t_env;
 
-/*typedef	struct	s_tdata
-{
-	int		y;
-	t_env	*env;
-}				t_tdata;*/
-
 
 void	handle_events(t_env *fractol);
 void 	init_mandel(t_env *fractol);
-void	make_mandelbrot(t_env *fractol);
-void	make_julia(t_env *fractol);
-void	make_burningship(t_env *fractol);
+void	make_fractale(t_env *fractol);
+void	mandelbrot_calc(t_env *fractol);
+void	julia_calc(t_env *fractol);
+void	burningship_calc(t_env *fractol);
 void	fill_pxl(t_env *fractol, int x, int y, int color);
 void	init_win(t_env *fractol, char **argv);
 void	init_fractol(t_env *fractol, char **argv);

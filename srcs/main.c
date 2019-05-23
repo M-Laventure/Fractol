@@ -27,8 +27,9 @@ int	main(int argc, char **argv)
 	init_fractol(fractol, argv);
 	void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
 	printf("id_frac : %d\n", fractol->id_fractale);
-	make_fractale[fractol->id_fractale - 1](fractol);
-	//handle_events(fractol);
+	make_fractale(fractol);
+	//make_fractale[fractol->id_fractale - 1](fractol);
+	handle_events(fractol);
 	mlx_loop(fractol->mlx_ptr);
 	return (0);
 }
