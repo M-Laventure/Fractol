@@ -1,6 +1,49 @@
 #include "../includes/fractol.h"
 
-void	burningship_calc(t_fractol *fractol)
+
+void	*burning(void *fractol)
+{
+	int		tmp;
+	t_env	*burn;
+
+	burn = (t_env *)fractol;
+	burn->x = 0;
+	tmp = burn->y;
+	while (burn->x < WIDTH)
+	{
+		burn->y = tmp;
+		while (burn->y < burn->y_max)
+		{
+			burningship_calc(burn);
+			burn->y++;
+		}
+		burn->x++;
+	}
+	return (NULL);
+}
+
+void	make_burningship(t_env *fractol)
+{
+		int i;
+		t_env		env[THREAD_NUMBER];
+		pthread_t	threads[THREAD_NUMBER];
+
+		i = 0;
+		while (i < THREAD_NUMBER)
+		{
+			ft_memcpy((void *)&env[i], (void *)fractol, sizeof(t_env));
+			env[i].y = THREAD_WIDTH * i;
+			env[i].y_max = THREAD_WIDTH * (i + 1);
+			//printf("env.y_max: %d\n", env[i].y_max);		
+			pthread_create(&threads[i], NULL, burning, &env[i]);
+			i++;
+		}
+		while (i--)
+			pthread_join(threads[i], NULL);
+		mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img, 0, 0);	
+}
+
+void	burningship_calc(t_env *fractol)
 {
 	fractol->c_r = fractol->x / fractol->zoom + fractol->x1;
 	fractol->c_i = fractol->y / fractol->zoom + fractol->y1;
@@ -16,8 +59,8 @@ void	burningship_calc(t_fractol *fractol)
 		fractol->it++;
 	}
 	if (fractol->it == fractol->it_max)
-		put_pxl_to_img(fractol, fractol->x, fractol->y, 0x000000);
+		fill_pxl(fractol, fractol->x, fractol->y, 0x000000);
 	else
-		put_pxl_to_img(fractol, fractol->x, fractol->y, (fractol->color * fractol->it));
+		fill_pxl(fractol, fractol->x, fractol->y, (fractol->color * fractol->it));
 }
 

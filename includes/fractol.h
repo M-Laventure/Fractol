@@ -24,20 +24,23 @@ typedef struct s_env
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*img;
-	int 	*img_data;
+	void 	*img_data;
+	char	**argv;
 	int		bpp;
 	int		size_line;
 	int		endian;
 	int 	fract; //?
 	int		width;
 	int		height;
+	int		mouse;
 	int		x;
 	int		y;
 	int		it_max;
-	int		iter;
+	int 	show_text;
+	int		it;
 	double 	zoom;
 	double	tmp;	
-	int y_max;
+	int		y_max;
 	int		color;
 	double 	x1;
 	double 	y1;
@@ -51,12 +54,21 @@ typedef struct s_env
 
 void	handle_events(t_env *fractol);
 void 	init_mandel(t_env *fractol);
-void	make_fractale(t_env *fractol);
+void	make_julia(t_env *fractol);
+void	make_mandelbrot(t_env *fractol);
+void	make_burningship(t_env *fractol);
 void	mandelbrot_calc(t_env *fractol);
 void	julia_calc(t_env *fractol);
 void	burningship_calc(t_env *fractol);
 void	fill_pxl(t_env *fractol, int x, int y, int color);
-void	init_win(t_env *fractol, char **argv);
+void	init_win(t_env *fractol);
+void	init_julia(t_env *fractol);
+void	init_mandel(t_env *fractol);
+void	init_burn(t_env *fractol);
 void	init_fractol(t_env *fractol, char **argv);
+//void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
+int		julia_mouse(int x, int y, t_env *fractol);
+int 	ft_close(void);
+
 
 #endif
