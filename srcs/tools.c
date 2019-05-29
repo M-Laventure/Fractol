@@ -13,6 +13,7 @@ void	fill_pxl(t_env *fractol, int x, int y, int color)
 		color = mlx_get_color_value(fractol->mlx_ptr, color);
 		ft_memcpy(fractol->img_data + 4 * WIDTH * y + x * 4, &color, sizeof(int));
 	}
+
 }
 
 void	init_win(t_env *fractol)
@@ -26,11 +27,11 @@ void	init_win(t_env *fractol)
 void init_fractol(t_env *fractol, char **argv)
 {
 	init_win(fractol);
-	if (ft_strcmp(argv[1], "julia"))
+	if (ft_strcmp(argv[1], "julia") == 0)
 		init_julia(fractol);
-	if (ft_strcmp(argv[1], "burningship"))
+	if (ft_strcmp(argv[1], "burningship") == 0)
 		init_burn(fractol);	
-	if (ft_strcmp(argv[1], "mandelbrot"))
+	if (ft_strcmp(argv[1], "mandelbrot") == 0)
 		init_mandel(fractol);
 }
 

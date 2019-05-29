@@ -27,36 +27,29 @@ void	mandelbrot_calc(t_env *fractol)
 void	*mandel(void *arg)
 {
 	t_env		*mandel;
-	int			tmp;
 
 	mandel = (t_env *)arg;
 	mandel->x = 0;
-	tmp = mandel->y;
-	while (mandel->x < 599)
+	while (mandel->x < WIDTH)
 	{
-		mandel->y = tmp;
-		while (mandel->y < mandel->y_max)
-		{
-			mandelbrot_calc(mandel);
-			mandel->y++;
-		}
+		mandelbrot_calc(mandel);
 		mandel->x++;
 	}
+//	pthread_exit(NULL);
 	return (NULL);
 }
 
 void	make_mandelbrot(t_env *fractol)
 {
 	int i;
-	t_env		env[THREAD_NUMBER];
-	pthread_t	threads[THREAD_NUMBER];
+	t_env		env[HEIGHT];
+	pthread_t	threads[HEIGHT];
 
 	i = 0;
-	while (i < THREAD_NUMBER)
+	while (i < HEIGHT)
 	{
 		ft_memcpy((void *)&env[i], (void *)fractol, sizeof(t_env));
-		env[i].y = THREAD_WIDTH * i;
-		env[i].y_max = THREAD_WIDTH * (i + 1);
+		env[i].y = i;
 		pthread_create(&threads[i], NULL, mandel, &env[i]);
 		i++;
 	}

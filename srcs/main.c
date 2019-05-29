@@ -6,7 +6,7 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 08:29:19 by malavent          #+#    #+#             */
-/*   Updated: 2019/05/23 19:56:11 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/28 15:45:36 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	init_fractol(fractol, argv);
 	void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
 	printf("id_frac : %d\n", fractol->id_fractale);
-	make_fractale[fractol->id_fractale - 1](fractol);
+	make_fractale[fractol->id_fractale](fractol);
 	handle_events(fractol);
 	mlx_loop(fractol->mlx_ptr);
 	return (0);

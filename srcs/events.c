@@ -36,7 +36,7 @@ int		key_hook(int keycode, t_env *fractol)
 	key_hook2(keycode, fractol);
 //	fract_calc(fractol);	
 	void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
-	make_fractale[fractol->id_fractale - 1](fractol);
+	make_fractale[fractol->id_fractale](fractol);
 	return (0);
 }
 
@@ -63,7 +63,7 @@ int		mouse_hook(int mousecode, int x, int y, t_env *fractol)
 	else if (mousecode == 5 || mousecode == 2)
 		ft_dezoom(x, y, fractol);
 	void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
-	make_fractale[fractol->id_fractale - 1](fractol);
+	make_fractale[fractol->id_fractale](fractol);
 	//fract_calc(fractol);
 	return (0);
 }

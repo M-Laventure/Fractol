@@ -1,7 +1,7 @@
 #include "../includes/fractol.h"
 
 
-void	*burning(void *fractol)
+/*void	*burning(void *fractol)
 {
 	int		tmp;
 	t_env	*burn;
@@ -20,28 +20,7 @@ void	*burning(void *fractol)
 		burn->x++;
 	}
 	return (NULL);
-}
-
-void	make_burningship(t_env *fractol)
-{
-		int i;
-		t_env		env[THREAD_NUMBER];
-		pthread_t	threads[THREAD_NUMBER];
-
-		i = 0;
-		while (i < THREAD_NUMBER)
-		{
-			ft_memcpy((void *)&env[i], (void *)fractol, sizeof(t_env));
-			env[i].y = THREAD_WIDTH * i;
-			env[i].y_max = THREAD_WIDTH * (i + 1);
-			//printf("env.y_max: %d\n", env[i].y_max);		
-			pthread_create(&threads[i], NULL, burning, &env[i]);
-			i++;
-		}
-		while (i--)
-			pthread_join(threads[i], NULL);
-		mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img, 0, 0);	
-}
+}*/
 
 void	burningship_calc(t_env *fractol)
 {
@@ -63,4 +42,75 @@ void	burningship_calc(t_env *fractol)
 	else
 		fill_pxl(fractol, fractol->x, fractol->y, (fractol->color * fractol->it));
 }
+
+void	*burning(void *fractol)
+{	
+	t_env	*burn;
+
+	burn = (t_env *)fractol;
+	burn->x = 0;
+	while (burn->x < WIDTH)
+	{
+		burningship_calc(burn);
+		burn->x++;
+	}
+	return (NULL);
+}
+
+/*typedef struct s_envtab
+{
+	t_env *f_env;
+	int y_max;
+}				t_tab;*/
+
+
+void	make_burningship(t_env *fractol)
+{
+		int i;
+		t_env		env[HEIGHT];
+		pthread_t	threads[HEIGHT];
+
+		i = 0;
+		while (i < HEIGHT)
+		{
+			ft_memcpy((void *)&env[i], (void *)fractol, sizeof(t_env));
+			env[i].y = i;
+			pthread_create(&threads[i], NULL, burning, &env[i]);
+			i++;
+		}
+		while (i--)
+			pthread_join(threads[i], NULL);
+		mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img, 0, 0);
+}
+
+/*
+void	make_burningship(t_env *fractol)
+{
+		printf("IN\n");
+		int i;
+		t_env		env[THREAD_NUMBER];
+	//	t_tab		env_tab[HEIGHT];
+		pthread_t	threads[THREAD_NUMBER];
+		
+	
+		i = 0;
+	//	while (i < HEIGHT)
+		while (i < THREAD_NUMBER)
+		{
+			//env_tab[i].f_env = fractol;
+			ft_memcpy((void *)&env[i], (void *)fractol, sizeof(t_env));
+			env[i].y = THREAD_WIDTH * i;
+			//env_tab[i].f_env->y = i;
+			//env_tab[i].f_env->y_max = HEIGHT - 1;
+			env[i].y_max = THREAD_WIDTH * (i + 1);
+			//printf("env.y_max: %d\n", env[i].y_max);	
+			//pthread_create(&threads[i], NULL, burning, &env_tab[i]);
+			pthread_create(&threads[i], NULL, burning, &env[i]);
+			i++;
+		}
+		while (i--)
+			pthread_join(threads[i], NULL);
+		mlx_put_image_to_window(fractol->mlx_ptr, fractol->win_ptr, fractol->img, 0, 0);	
+}*/
+
 

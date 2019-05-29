@@ -7,12 +7,13 @@
 #include <mlx.h>
 #include <pthread.h>
 #include "../libft/libft.h"
-#define ITER_MAX 50
-#define WIDTH 600
+#include <stdio.h>
+#define ITER_MAX 25
+#define HEIGHT 1000
+#define WIDTH 1000
 #define THREAD_WIDTH 5
 #define THREAD_NUMBER 120
 #define USAGE "Usage : ./fractol [id_fractale][width] [height]"
-
 
 typedef enum
 {
@@ -30,8 +31,6 @@ typedef struct s_env
 	int		size_line;
 	int		endian;
 	int 	fract; //?
-	int		width;
-	int		height;
 	int		mouse;
 	int		x;
 	int		y;
@@ -50,6 +49,14 @@ typedef struct s_env
 	double z_i;
 	e_fractale 	id_fractale;
 }				t_env;
+
+
+typedef struct s_envtab
+{
+	t_env *f_env;
+}
+				t_tab;
+
 
 
 void	handle_events(t_env *fractol);
