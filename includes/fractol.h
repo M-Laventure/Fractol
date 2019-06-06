@@ -8,11 +8,8 @@
 #include <pthread.h>
 #include "../libft/libft.h"
 #include <stdio.h>
-#define ITER_MAX 25
 #define HEIGHT 1000
 #define WIDTH 1000
-#define THREAD_WIDTH 5
-#define THREAD_NUMBER 120
 #define USAGE "Usage : ./fractol [id_fractale][width] [height]"
 
 typedef enum
@@ -25,22 +22,23 @@ typedef struct s_env
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*img;
-	void 	*img_data;
-	char	**argv;
+	unsigned int *img_data;
+	char 	**argv;
+	int		psych_mod;
+	int		width;
+	int 	height;
 	int		bpp;
 	int		size_line;
 	int		endian;
-	int 	fract; //?
 	int		mouse;
 	int		x;
 	int		y;
-	int		it_max;
+	int		iter_max;
 	int 	show_text;
 	int		it;
 	double 	zoom;
 	double	tmp;	
-	int		y_max;
-	int		color;
+	unsigned int	color;
 	double 	x1;
 	double 	y1;
 	double c_r;
@@ -55,7 +53,7 @@ typedef struct s_envtab
 {
 	t_env *f_env;
 }
-				t_tab;
+t_tab;
 
 
 

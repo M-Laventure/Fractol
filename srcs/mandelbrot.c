@@ -9,7 +9,7 @@ void	mandelbrot_calc(t_env *fractol)
 	fractol->z_i = 0;
 	fractol->it = 0;
 	while (fractol->z_r * fractol->z_r + fractol->z_i *
-			fractol->z_i < 4 && fractol->it < fractol->it_max)
+			fractol->z_i < 4 && fractol->it < fractol->iter_max)
 	{
 		fractol->tmp = fractol->z_r;
 		fractol->z_r = fractol->z_r * fractol->z_r -
@@ -17,7 +17,7 @@ void	mandelbrot_calc(t_env *fractol)
 		fractol->z_i = 2 * fractol->z_i * fractol->tmp + fractol->c_i;
 		fractol->it++;
 	}
-	if (fractol->it == fractol->it_max)
+	if (fractol->it == fractol->iter_max)
 		fill_pxl(fractol, fractol->x, fractol->y, 0x000000);
 	else
 		fill_pxl(fractol, fractol->x, fractol->y, (fractol->color * fractol->it));

@@ -2,11 +2,22 @@
 
 int key_hook2(int keycode, t_env *fractol)
 {
-	if (keycode == 19)
-		fractol->color = 2050;
-	else if (keycode == 20)
-		fractol->color = 265;
-	else if (keycode == 35)
+	if (keycode == 14)
+	{
+		ft_putendl("hre");
+		printf("%d\n", fractol->psych_mod);
+		fractol->psych_mod = -fractol->psych_mod;
+	}
+	if (keycode == 15)
+		fractol->color = 0x990000;
+	else if (keycode == 5)
+	{
+		ft_putendl("hre");
+		fractol->color = 0x009e00;
+	}
+	else if (keycode == 11)
+		fractol->color = 0x000096;
+	else if (keycode == 35) //put the julia constant in pause
 		fractol->mouse = !fractol->mouse;
 	else if (keycode == 34)
 		fractol->show_text = !fractol->show_text;
@@ -18,21 +29,19 @@ int		key_hook(int keycode, t_env *fractol)
 	if (keycode == 53)
 		exit(1);
 	else if (keycode == 69)
-		fractol->it_max += 50;
+		fractol->iter_max += 50;
 	else if (keycode == 78)
-		fractol->it_max -= 50;
-	else if (keycode == 123)
-		fractol->x1 -= 30 / fractol->zoom;
-	else if (keycode == 124)
+		fractol->iter_max -= 50;
+	else if (keycode == 123) // left
 		fractol->x1 += 30 / fractol->zoom;
-	else if (keycode == 125)
-		fractol->y1 += 30 / fractol->zoom;
-	else if (keycode == 126)
+	else if (keycode == 124) //right
+		fractol->x1 -= 30 / fractol->zoom;
+	else if (keycode == 125) // up 
 		fractol->y1 -= 30 / fractol->zoom;
-	else if (keycode == 49)
+	else if (keycode == 126) // down
+		fractol->y1 += 30 / fractol->zoom;
+	else if (keycode == 49) // space bar : reset
 		init_fractol(fractol, fractol->argv);
-	else if (keycode == 18)
-		fractol->color = 1677216;
 	key_hook2(keycode, fractol);
 //	fract_calc(fractol);	
 	void	(*make_fractale[3])(t_env *) = {make_julia, make_mandelbrot, make_burningship};
@@ -45,7 +54,7 @@ void	ft_zoom(int x, int y, t_env *fractol)
 	fractol->x1 = (x / fractol->zoom + fractol->x1) - (x / (fractol->zoom * 1.3));
 	fractol->y1 = (y / fractol->zoom + fractol->y1) - (y / (fractol->zoom * 1.3));
 	fractol->zoom *= 1.3;
-	fractol->it_max++;
+	fractol->iter_max++;
 }
 
 void	ft_dezoom(int x, int y, t_env *fractol)
@@ -53,7 +62,7 @@ void	ft_dezoom(int x, int y, t_env *fractol)
 	fractol->x1 = (x / fractol->zoom + fractol->x1)  - (x / (fractol->zoom / 1.3));
 	fractol->y1 = (y / fractol->zoom + fractol->y1) - (y / (fractol->zoom / 1.3));
 	fractol->zoom /= 1.3;
-	fractol->it_max--;
+	fractol->iter_max--;
 }
 
 int		mouse_hook(int mousecode, int x, int y, t_env *fractol)
@@ -70,7 +79,7 @@ int		mouse_hook(int mousecode, int x, int y, t_env *fractol)
 
 void	handle_events(t_env *fractol)
 {
-	mlx_hook(fractol->win_ptr, 6, 1L<<6, julia_mouse, fractol);
+	mlx_hook(fractol->win_ptr, 6, 1L << 6, julia_mouse, fractol);
 	mlx_hook(fractol->win_ptr, 17, 0L, close, fractol);
 	mlx_key_hook(fractol->win_ptr, key_hook, fractol);
 	mlx_mouse_hook(fractol->win_ptr, mouse_hook, fractol);

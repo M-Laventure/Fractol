@@ -3,8 +3,8 @@
 void	init_mandel(t_env *fractol)
 {
 		fractol->id_fractale = mandelbrot;
-		fractol->it_max = 50;
 		fractol->zoom = 300;
+		fractol->iter_max = 25;
 		fractol->x1 = -2.05;
 		fractol->y1 = -1.3;
 		fractol->color = 265;
@@ -13,8 +13,8 @@ void	init_mandel(t_env *fractol)
 void	init_julia(t_env *fractol)
 {
 		fractol->id_fractale = julia;
-		fractol->zoom = 200;
-		fractol->it_max = 50;
+		fractol->zoom = 300;
+		fractol->iter_max = 25;
 		fractol->x1 = -2.0;
 		fractol->y1 = -1.9;
 		fractol->color = 265;
@@ -25,11 +25,11 @@ void	init_julia(t_env *fractol)
 
 void	init_burn(t_env *fractol)
 {
-		fractol->id_fractale = burningship;
-		fractol->it_max = 50;
-		fractol->zoom = 220;
-		fractol->x1 = -2.2;
-		fractol->y1 = -2.5;
+		fractol->id_fractale = burningship;	
+		fractol->iter_max = 25;
+		fractol->zoom = 250;
+		fractol->x1 = -1.9;
+		fractol->y1 = -2;
 		fractol->color = 265;
 }
 
